@@ -25,6 +25,11 @@ const storageRef = ref(storage);
 
 const uploadImage = async (req,res,next) => {
 
+  if(req.files == null){
+    next()  
+    return ;
+  }
+
     try {
         const fileType = req.files.file.mimetype;
         const arr = fileType.split("/");

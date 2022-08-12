@@ -19,6 +19,10 @@ const postSchema = mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     required: true,
   },
+  postedByName: {
+    type:String,
+    required:true,
+  },
   likeCount:{
     type:Number
   }

@@ -16,13 +16,18 @@ router.post("/api/post/post",[getUser,uploadImage] ,async (req,res) => {
             image: req.imgUrl,
             postHtml: req.body.postHtml,
             postedBy: req.user._id,
+            postedByName:req.user.name,
             likeCount:0
         })
         await post.save();
-        res.send(post)
+        res.status(201).json({
+            message:"Post has been created"
+        })
     } catch (e) {
-        console.log(e);
-        res.send({error: "Something went wrong please try again!"})
+        res.status(500).json({
+          message: "Something went wrong please try again",
+        });
+        return;
     }
 })
 
@@ -31,7 +36,10 @@ router.get("/api/post/getall", async (req,res) => {
         const posts = await Post.find({})
         res.send(posts)
     } catch (e) {
-        res.send({ error: "Something went wrong please try again!" });
+        res.status(500).json({
+          message: "Something went wrong please try again",
+        });
+        return;
     }
 })
 
@@ -40,8 +48,11 @@ router.get("/api/post/getone/:id", async (req,res) => {
         const post = await Post.findById(req.params.id);
         res.send(post)
         console.log(post);
-    } catch (error) {
-        res.send({ error: "Something went wrong please try again!" });
+    } catch (e) {
+        res.status(500).json({
+          message: "Something went wrong please try again",
+        });
+        return;
     }
 })
 
@@ -51,7 +62,10 @@ router.get("/api/post/myposts", getUser,async (req,res) => {
         const myPosts = await Post.find({ postedBy:  req.user._id});
         res.send(myPosts)
     } catch (e) {
-        res.send({ error: "Something went wrong please try again!" });
+         res.status(500).json({
+           message: "Something went wrong please try again",
+         });
+         return;
     }
 })
 
@@ -73,7 +87,10 @@ try {
         throw new Error();
     }
 } catch (e) {
-    res.send({ error: "Something went wrong please try again!" });
+    res.status(500).json({
+      message: "Something went wrong please try again",
+    });
+    return;
 }
 
 })
@@ -88,7 +105,10 @@ router.delete("/api/post/deletepost/:id", getUser, async (req,res) => {
          throw new Error();
        }
     } catch (e) {
-        res.send({ error: "Something went wrong please try again!" });
+        res.status(500).json({
+          message: "Something went wrong please try again",
+        });
+        return;
     }
 })
 
@@ -98,7 +118,10 @@ router.get("/api/post/getcomments/:id", async(req,res) => {
         await post.populate("comments");
         res.send(post.comments);
     } catch (e) {
-        res.send({ error: "Something went wrong please try again!" });
+        res.status(500).json({
+          message: "Something went wrong please try again",
+        });
+        return;
     }
 })
 
@@ -126,7 +149,10 @@ router.put("/api/post/like/:id", getUser, async (req,res) => {
         }
         
     } catch (e) {
-        res.send("Something went wrong please try again!")
+         res.status(500).json({
+           message: "Something went wrong please try again",
+         });
+         return;
     }
 })
 
