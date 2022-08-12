@@ -34,7 +34,7 @@ router.post("/api/post/post",[getUser,uploadImage] ,async (req,res) => {
 router.get("/api/post/getall", async (req,res) => {
     try {
         const posts = await Post.find({})
-        res.send(posts)
+        res.status(200).json({posts})
     } catch (e) {
         res.status(500).json({
           message: "Something went wrong please try again",
@@ -45,9 +45,20 @@ router.get("/api/post/getall", async (req,res) => {
 
 router.get("/api/post/getone/:id", async (req,res) => {
     try {
+        if(req.params.id.length != 24 ){
+            res.status(400).json({
+              message: "The post you looking for is no longer exists",
+            });
+            return
+        }
         const post = await Post.findById(req.params.id);
-        res.send(post)
-        console.log(post);
+        if(post == null){
+            res.status(400).json({
+                message:"The post you looking for is no longer exists"
+            })
+            return
+        }
+        res.status(200).json(post)
     } catch (e) {
         res.status(500).json({
           message: "Something went wrong please try again",
