@@ -6,13 +6,21 @@ const User = require("../models/user");
 const getUser = require("../middleware/getUser");
 
 router.post("/api/comment/post/:id", getUser, async (req,res) => {
+    if(req.body.commentText = undefined && req.body.commentText == ""){
+        res.status(201).json({
+            message:"Comment can't be empty"
+        })
+    }
     try {
         const userId =req.user._id;
         const comment = new Comment({commentText:req.body.commentText,commentedBy:userId,commentedPost:req.params.id})
         await comment.save()
         res.send(comment)
     } catch (e) {
-        res.send({ error: "Something went wrong please try again!" });
+        res.status(500).json({
+          message: "Something went wrong please try again",
+        });
+        return;
     }
 })
 
@@ -28,7 +36,10 @@ router.delete("/api/comment/delete/:id", getUser, async (req,res) => {
             throw new Error();
         }
     } catch (e) {
-        res.send({ error: "Something went wrong please try again!" });
+        res.status(500).json({
+          message: "Something went wrong please try again",
+        });
+        return;
     }
 })
 
@@ -44,7 +55,10 @@ router.put("/api/comment/updatetext/:id", getUser, async (req,res) => {
             throw new Error();
           }
     } catch (e) {
-        res.send({error: "Something went wrong please try again!"})
+        res.status(500).json({
+          message: "Something went wrong please try again",
+        });
+        return;
     }
 })
 

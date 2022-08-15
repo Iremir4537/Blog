@@ -57,7 +57,6 @@ const uploadImage = async (req,res,next) => {
         req.imgUrl = ImgURL;
         next();
     } catch (e) {
-        console.log(e);
         res.send("Something went wrong");
     }
 

@@ -10,6 +10,12 @@ const user = require("../models/user");
 
 
 router.post("/api/post/post",[getUser,uploadImage] ,async (req,res) => {
+    if(req.body.title == undefined && req.body.postHtml == undefined){
+        res.status(201).json({
+            message:"Please fill necessary parts"
+        })
+        return
+    }
     try {
         const post = new Post({
             title: req.body.title,
