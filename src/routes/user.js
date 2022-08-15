@@ -61,7 +61,7 @@ let hasNumber;
   }
 //Email must not be in the database
   const x = await User.find({ email: req.body.email });
-  if(x != []){
+  if(x == []){
     res.status(400).json({
       message: "Email is already in use",
     });

@@ -10,12 +10,10 @@ app.use(cookieParser())
 app.use(fileupload());
 
 const userRouter = require("./src/routes/user");
-const appRouter = require("./src/routes/app");
 const postRouter = require("./src/routes/post")
 const commentRouter = require("./src/routes/comment")
 
 app.use(userRouter);
-app.use(appRouter);
 app.use(postRouter);
 app.use(commentRouter)
 

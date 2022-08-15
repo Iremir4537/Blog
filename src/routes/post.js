@@ -156,13 +156,17 @@ router.put("/api/post/like/:id", getUser, async (req,res) => {
                     await Post.findByIdAndUpdate(req.params.id,{likeCount:post.likeCount})
                 }
             }
-            res.send("Like deleted")
+           res.status(200).json({
+            message:"Like has been deleted"
+           })
         }
         else{
             post.likeCount =post.likeCount + 1; 
             await Post.findByIdAndUpdate(req.params.id,{likeCount:post.likeCount})
             await User.findByIdAndUpdate(req.user._id,{$push: {likes: {postId:req.params.id}}})
-            res.send("Liked")      
+            res.status(200).json({
+              message: "Post has been liked",
+            });
         }
         
     } catch (e) {

@@ -11,6 +11,9 @@ const commentSchema = mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     required: true
   },
+  commentedByName:{
+    type: String
+  },
   commentedPost: {
     type: mongoose.SchemaTypes.ObjectId,
     required: true

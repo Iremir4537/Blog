@@ -6,17 +6,20 @@ const User = require("../models/user");
 const getUser = require("../middleware/getUser");
 
 router.post("/api/comment/post/:id", getUser, async (req,res) => {
-    if(req.body.commentText = undefined && req.body.commentText == ""){
+    if(req.body.commentText == undefined && req.body.commentText == ""){
         res.status(201).json({
             message:"Comment can't be empty"
         })
     }
     try {
         const userId =req.user._id;
-        const comment = new Comment({commentText:req.body.commentText,commentedBy:userId,commentedPost:req.params.id})
+        const comment = new Comment({commentText:req.body.commentText,commentedBy:userId,commentedByName:req.user.name,commentedPost:req.params.id})
         await comment.save()
-        res.send(comment)
+        res.status(200).json({
+            message:"Comment has been created"
+        })
     } catch (e) {
+        console.log(e);
         res.status(500).json({
           message: "Something went wrong please try again",
         });
