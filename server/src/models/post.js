@@ -1,3 +1,4 @@
+const { Timestamp } = require("mongodb");
 const mongoose = require("mongoose");
 
 const postSchema = mongoose.Schema({
@@ -26,7 +27,7 @@ const postSchema = mongoose.Schema({
   likeCount:{
     type:Number
   }
-});
+},{timestamps:true});
 
 postSchema.virtual("comments",{
   ref:"Comment",

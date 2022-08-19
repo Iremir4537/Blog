@@ -1,3 +1,4 @@
+const { Timestamp } = require("mongodb");
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
@@ -18,8 +19,9 @@ const userSchema = mongoose.Schema({
     required: true,
     trim: true,
   },
-  likes:[{postId:mongoose.SchemaTypes.ObjectId}]
-});
+  likes: [{ postId: mongoose.SchemaTypes.ObjectId }],
+
+},{timestamps:true});
 
 //Virtual blog posts
 

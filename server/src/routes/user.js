@@ -78,7 +78,7 @@ let hasNumber;
         });
         await user.save();
         res.status(201).json({
-          message:"Accout is registered"
+          message:"Account is registered"
         });
       } catch (e) {
           res.status(500).json({
@@ -114,9 +114,9 @@ router.post("/api/user/login", async (req,res) => {
                 }
                 else{
                    const token = jwt.sign({name:user.name,email:user.email}, process.env.TOKENKEY);
-                   res.cookie("SESSION",token,{expiresIn:"24h"})
                     res.status(200).json({
-                      message:"Login is succesfull"
+                      message:"Login is succesfull",
+                      token
                     })
                     return
                 }
